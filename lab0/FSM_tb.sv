@@ -41,6 +41,8 @@ module stimulus ();
 	#0  In = 1'b0;
 	#20 In = 1'b1;
 	#20 In = 1'b0;
+     #20 In = 1'b0;
+     #20 In = 1'b0;
      end
 
 endmodule // FSM_tb

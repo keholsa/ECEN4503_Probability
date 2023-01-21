@@ -8,7 +8,26 @@ module regfile (input logic         clk,
    
    // three ported register file
    // read two ports combinationally
+
+   assign ra1 <= register[rf0];
+   assign ra2 <= register[rf1];
+   assign wa3 <= register[rf2];
+   assign wd3 <= register[rf3];
+   assign we3 <= register[rf4];
    // write third port on rising edge of clock
+
+   always_ff @ (posedge clk) 
+    begin
+   if(we3)
+     wd3 = 1'b1;
+     wa3 = 1'b1;
+
+     wa3 <= register[wd3];
+
+    end
+
+   
+   
    // register 0 hardwired to 0
    
    
