@@ -1,6 +1,7 @@
 # To run, make sure Python 3.x.x is installed, and navigate to the directory
 # that "requriredLibraries.txt" is found. Open a terminal in that directory and run:
 # pip install -r requirements.txt
+# to run, from command line perform "python keenan_holsapple_random_number_generator.py"
 
 # Project 1.1- Generating a random number.
 # User inputs total random numbers generated
@@ -19,7 +20,7 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 #gui declarations
 root = tk.Tk()
 window = root.winfo_height
-root.geometry("600x600")
+root.geometry("650x600")
 
 root.title("Random Number Generator")
 titleLabel = tk.Label(root, text="Project 1.1: Random Number Generator", font=("Segoe UI", 24, "bold")).place(x=10,y=15)
