@@ -12,6 +12,7 @@
 import tkinter as tk
 from tkinter import *
 import random
+from array import *
 
 # Root and window declaration
 root = tk.Tk()
@@ -20,10 +21,60 @@ root.geometry("700x400")
 root.title("Monty Hall Problem")
 titleLabel = tk.Label(root, text="Project 1.2: Monty Hall Problem", font=("Segoe UI", 24, "bold")).place(x=120,y=15)
 
+# randomizes 100000 times, viewable in console lien
+def proofFunc():
+
+    #declaring variables
+    componentArr = ["Car", "Goat", "Goat"]
+    proofArr = [[None for j in range(3)] for i in range(10000)]
+    randomInt = 0
+    goatCount = 0
+    carCount = 0
+    win = 0
+ 
+    i = 0
+    j = 0
+    #loop performs game 10000 times
+    while i < 10000: 
+
+        #performs same game mechanic of randomizing predefined array
+        random.shuffle(componentArr)
+        #bot picks numbers 0-2 to determine which element will be picked
+        randomInt = random.randint(0,2)
+        
+        #nested loop to assign values to double array
+        while j < 3:
+            proofArr[i][j] = componentArr[j]
+            if(proofArr[i][j] == "Goat"):
+                goatCount += 1
+            if(proofArr[i][j] == "Car"):
+                carCount += 1
+
+            #conditional statements that determine if the computer won
+            if(randomInt == 0):
+                if(proofArr[i][0] == "Car"):
+                    win += 1
+            if(randomInt == 1):
+                if(proofArr[i][1] == "Car"):
+                    win += 1
+            if(randomInt == 2):
+                if(proofArr[i][2] == "Car"):
+                    win += 1
+            j += 1
+        j = 0
+        i += 1
+    
+    #to line statements
+    print("Goats generated: " + str(goatCount))
+    print("Cars generated: " + str(carCount))
+    print("Number of wins: " + str(win))
+    print("Probability of guessing correctly: " + str( 100 * (win / 10000)) + "%")
+
+
 
 # Function that rebuilds form with newly managed inputs from user.
 # Reason for this is because Tkinter does not allow passing of variables without volatile global variables.
-# Not actual recursion just named it that because it just helped with the building process mentally.
+# Not actual recursion just named it that because it just helped with the building process mentally
 def recursiveFunc(componentArr, lbl1, lbl2, lbl3, doorNumber):
 
     #initializing labels
@@ -119,8 +170,8 @@ def startFunc():
     thirdDoorBtn.place(x=450, y=140)
 
 # button declaration for start button
-btnStart = tk.Button(root, text="New Game", command=startFunc, width=25, height=2).place(x=250, y=330)
-
+btnStart = tk.Button(root, text="New Game", command=startFunc, width=25, height=2).place(x=150, y=330)
+btnProof = tk.Button(root, text="Proof", command=proofFunc, width=25, height=2).place(x=300, y=330)
 # running loop for tkinter gui
 root.mainloop()
 
