@@ -14,18 +14,21 @@ import random
 import math
 import matplotlib.pyplot as plt
 
-import 
+
 
 
 # defining sample count
-numSamples = 10000
+numSamples = 100000
 
 
 # initializing variables
 randomXArr = [0] * (numSamples + 1)
 randomYArr = [0] * (numSamples + 1)
 jointPDFArr = [0] * (numSamples + 1)
-
+marginalXArr = [0] * (numSamples + 1)
+marginalYArr = [0] * (numSamples + 1)
+samplesYArr = [0] * (numSamples + 1)
+conditionalSamplesArr = [0] * (numSamples + 1)
 
 # generating the joint PDF balue
 def generate_JointPDF(numSamples):
@@ -54,12 +57,79 @@ def generate_JointPDF(numSamples):
 
     return randomXArr, randomYArr, jointPDFArr 
 
+# marginal pdf function for x
+def marginal_pdf_X(numSamples, randomXArr):
+
+    i = 0
+    while(i < numSamples):
+
+        # condition -1<=x<=1
+        if(randomXArr[i] >= -1 and randomXArr[i] <= 1):
+
+            # marginal eq
+            marginalXArr[i] = (2 * math.sqrt(1-randomXArr[i])) / math.pi
+        else:
+            marginalXArr[i] = 0
+        
+        i += 1
+
+    return marginalXArr
+
+
+# determien conditional pdf
+def conditional_pdf_y(numSamples, randomYArr, jointPDFArr):
+
+    i = 0
+
+
+    # finding marginal pdf for y random values
+    marginalYArr = marginal_pdf_X(numSamples, randomYArr)
+
+
+    while(i < numSamples):
+
+        # conditional requirements for random variable                                         
+        if(randomYArr[i] >= -.01 and randomYArr[i] <= .01):
+     
+            # assigns samples based on if condition is satisfied
+            samplesYArr[i] = randomYArr[i]
+
+
+            # cannot divide by zero, limit
+            if(marginalYArr[i] == 0):
+                conditionalSamplesArr[i] = 0
+            else:
+                
+                # perfoming function to find conditional pdf
+                conditionalSamplesArr[i] = jointPDFArr[i] / marginalYArr[i]
+
+        i += 1
+
+
+    return samplesYArr, conditionalSamplesArr
+
+
+
+        
+
+
+
+
 
 #plot figure 1
 randomXArr, randomYArr, jointPDFArr = generate_JointPDF(numSamples)
-plt.hist2d(randomXArr, randomYArr, weights=jointPDFArr, bins=50, cmap='Blues')
+plt.hist2d(randomXArr, randomYArr, weights=jointPDFArr, bins=(100,100), cmap='Blues')
 plt.colorbar()
 plt.show()
 
+#plot figure 2
+marginalXArr = marginal_pdf_X(numSamples, randomXArr)
+plt.hist(marginalXArr, weights=randomXArr, bins=50)
+plt.show()
     
+
+#plot figure 3
+samplesYArr, conditionalSamplesArr = conditional_pdf_y(numSamples, randomYArr, jointPDFArr)
+plt.hist(samplesYArr, weights=conditionalSamplesArr, bins=50)
+plt.show()
 
