@@ -120,16 +120,25 @@ def conditional_pdf_y(numSamples, randomYArr, jointPDFArr):
 randomXArr, randomYArr, jointPDFArr = generate_JointPDF(numSamples)
 plt.hist2d(randomXArr, randomYArr, weights=jointPDFArr, bins=(100,100), cmap='Blues')
 plt.colorbar()
+plt.title("Figure 1: 2D Histogram of Random Variables w/ Joint PDF")
+plt.xlabel("Random Values X")
+plt.ylabel("Random Values Y")
 plt.show()
 
 #plot figure 2
 marginalXArr = marginal_pdf_X(numSamples, randomXArr)
-plt.hist(marginalXArr, weights=randomXArr, bins=50)
+plt.hist(randomXArr, weights=marginalXArr, bins=50)
+plt.title("Figure 2: 1D Histogram of Marginal PDF for random variable X")
+plt.xlabel("Random Values X")
+plt.ylabel("Analytical Marginal PDF for X")
 plt.show()
     
 
 #plot figure 3
 samplesYArr, conditionalSamplesArr = conditional_pdf_y(numSamples, randomYArr, jointPDFArr)
 plt.hist(samplesYArr, weights=conditionalSamplesArr, bins=50)
+plt.title("Figure 3: 1D histogram of Conditional Density Function")
+plt.xlabel("Random Values X")
+plt.ylabel("Analytical Conditional Samples")
 plt.show()
 
