@@ -109,13 +109,6 @@ def conditional_pdf_y(numSamples, randomYArr, jointPDFArr):
     return samplesYArr, conditionalSamplesArr
 
 
-
-        
-
-
-
-
-
 #plot figure 1
 randomXArr, randomYArr, jointPDFArr = generate_JointPDF(numSamples)
 plt.hist2d(randomXArr, randomYArr, weights=jointPDFArr, bins=(100,100), cmap='Blues')
